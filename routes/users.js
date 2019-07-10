@@ -17,7 +17,4 @@ router.post('/updateEmployeeData', employeeControler.updateEmployeeData);
 router.post('/removeEmployeeData', employeeControler.removeEmployeeData);
 
 
-
-
-
 module.exports = router;
