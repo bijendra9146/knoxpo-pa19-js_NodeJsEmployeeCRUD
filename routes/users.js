@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var employeeControler = require("../Controller/employeeCRUD_Operation")
+var employeeControler = require("../Controller/employeeCRUDOperation")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

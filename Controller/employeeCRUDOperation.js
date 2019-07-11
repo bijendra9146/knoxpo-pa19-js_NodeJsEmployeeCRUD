@@ -3,15 +3,14 @@ const fs = require('fs')
 
 
 exports.getEmployeeDeatils = function(req,res){
-
-    fs.readFile('employee.json', 'utf8', (err, jsonString) => {
+// read file 'employee.json' by fs (file sysytem)
+    fs.readFile('employee.json', 'utf8', (err, jsonEmployee) => {
         if (err) {
             console.log("Error reading file from disk:", err)
             return
         }
         try {
-            const employeeArrayObject = JSON.parse(jsonString)
-            console.log("Customer address is:", employeeArrayObject) // => "Customer address is: Infinity Loop Drive"
+            const employeeArrayObject = JSON.parse(jsonEmployee)
             var response = {
                 responseStatus : "000",
                 responseMessage : "Employee Data Fetch successfuly",
@@ -33,27 +32,23 @@ exports.getEmployeeDeatils = function(req,res){
 
 exports.insertEmployeeData = function(req,res){
 
-    console.log("inside insert data ",req.body);
     var reqData = req.body;
-
-    fs.readFile('employee.json', 'utf8', (err, jsonString) => {
+// read file 'employee.json' by fs (file sysytem)
+    fs.readFile('employee.json', 'utf8', (err, jsonEmployee) => {
         if (err) {
             console.log("Error reading file from disk:", err)
             return
         }
         try {
-            const employeeArrayObject = JSON.parse(jsonString)
+            const employeeArrayObject = JSON.parse(jsonEmployee)
                             
             employeeArrayObject.push(reqData);
-            console.log("fetchdata push is:", employeeArrayObject);
             let insertEmployeeData = JSON.stringify(employeeArrayObject);
             fs.writeFileSync('employee.json', insertEmployeeData);
 
             var fetchdata = employeeArrayObject.filter(function(everyData){
                 return everyData.mobile == reqData.mobile
             })
-            console.log("fetchdata filter is:", fetchdata);
-            
 
             var response = {
                 responseStatus : "000",
@@ -75,26 +70,24 @@ exports.insertEmployeeData = function(req,res){
 }
 
 exports.updateEmployeeData = function(req,res){
-    console.log("inside update data ",req.body);
     var reqData = req.body;
-
-    fs.readFile('employee.json', 'utf8', (err, jsonString) => {
+// read file 'employee.json' by fs (file sysytem)
+    fs.readFile('employee.json', 'utf8', (err, jsonEmployee) => {
         if (err) {
             console.log("Error reading file from disk:", err)
             return
         }
         try {
-            const employeeArrayObject = JSON.parse(jsonString)
-            console.log("Customer address is:", employeeArrayObject) // => "Customer address is: Infinity Loop Drive"
+            const employeeArrayObject = JSON.parse(jsonEmployee)
             
             var fetchdata = employeeArrayObject.filter(function(everyData){
                 return everyData.mobile != reqData.mobile
             })
-            console.log("fetchdata is:", fetchdata);          
             fetchdata.push(reqData);
-            console.log("fetchdata push is:", fetchdata);
             let updateEmployeeData = JSON.stringify(fetchdata);
-            fs.writeFileSync('employee.json', updateEmployeeData); 
+
+
+            fs.writeFileSync('employee.json', updateEmployeeData); // here after exicution new data is updating in employee.json using writeFileSync
             
             var response = {
                 responseStatus : "000",
@@ -118,24 +111,21 @@ exports.updateEmployeeData = function(req,res){
 
 exports.removeEmployeeData = function(req,res){
 
-    console.log("inside insert data ",req.body);
     var reqData = req.body;
 
-    fs.readFile('employee.json', 'utf8', (err, jsonString) => {
+    fs.readFile('employee.json', 'utf8', (err, jsonEmployee) => {
         if (err) {
             console.log("Error reading file from disk:", err)
             return
         }
         try {
-            const employeeArrayObject = JSON.parse(jsonString)
-            console.log("Customer address is:", employeeArrayObject); 
+            const employeeArrayObject = JSON.parse(jsonEmployee)
             
             var fetchdata = employeeArrayObject.filter(function(everyData){
                 return everyData.mobile != reqData.mobile
             });
-            console.log("fetchdata is:", fetchdata);     
             let removeEmployeeData = JSON.stringify(fetchdata);
-            fs.writeFileSync('employee.json', removeEmployeeData); 
+            fs.writeFileSync('employee.json', removeEmployeeData); // here after removing data, new data is updating in employee.json using writeFileSync
             
             var response = {
                 responseStatus : "000",
